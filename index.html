@@ -250,31 +250,32 @@ function createCelebrationImages() {
 
     // Top row
     const topRow = [
-        {src:"./soobin1.jpeg", top:isMobile? h*0.15 : h*0.12, left:isMobile? w*0.15 : w*0.05},
-        {src:"./kai.jpg", top:isMobile? h*0.15 : h*0.12, left:isMobile? w*0.4 : w*0.45},
-        {src:"./beomgyu.jpg", top:isMobile? h*0.15 : h*0.12, left:isMobile? w*0.65 : w*0.85}
+        {src:"./soobin1.jpeg", top:isMobile? "15%" : "12%", left:isMobile? "10%" : "5%"},
+        {src:"./kai.jpg", top:isMobile? "15%" : "12%", left:isMobile? "40%" : "45%"},
+        {src:"./beomgyu.jpg", top:isMobile? "15%" : "12%", left:isMobile? "70%" : "85%"}
     ];
 
     // Bottom row
     const bottomRow = [
-        {src:"./taehyun.jpg", top:isMobile? h*0.75 : h*0.82, left:isMobile? w*0.15 : w*0.05},
-        {src:"./yeonjun2.jpg", top:isMobile? h*0.75 : h*0.82, left:isMobile? w*0.4 : w*0.45},
-        {src:"./yeonjun3.jpg", top:isMobile? h*0.75 : h*0.82, left:isMobile? w*0.65 : w*0.85}
+        {src:"./taehyun.jpg", top:isMobile? "75%" : "82%", left:isMobile? "10%" : "5%"},
+        {src:"./yeonjun2.jpg", top:isMobile? "75%" : "82%", left:isMobile? "40%" : "45%"},
+        {src:"./yeonjun3.jpg", top:isMobile? "75%" : "82%", left:isMobile? "70%" : "85%"}
     ];
 
     [...topRow, ...bottomRow].forEach((img, i)=>{
         const el = document.createElement("div");
         el.className = "celebration-img";
         el.style.backgroundImage = `url(${img.src})`;
-        el.style.top = "100%";
-        el.style.left = img.left + "px";
-        el.style.opacity = 0;
-        el.style.transform = "scale(0.8)";
+        el.style.position = "absolute";   // ensure positioning works
+        el.style.top = img.top;
+        el.style.left = img.left;
+        el.style.opacity = 1;             // make visible immediately
+        el.style.transform = "scale(1)";  // normal size
         container.appendChild(el);
-
+        
         setTimeout(()=>{
             el.style.transition = "top 1s ease-out, left 1s ease-out, opacity 1s ease-out, transform 0.8s ease-out";
-            el.style.top = img.top + "px";
+            el.style.top = img.top;
             el.style.opacity = 1;
             el.style.transform = "scale(1.05)";
             setTimeout(()=>{
@@ -284,6 +285,7 @@ function createCelebrationImages() {
         }, i*200);
     });
 }
+
 
 function createFloating(){
     const flowers=document.getElementById("flowers");
