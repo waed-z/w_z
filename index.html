@@ -15,17 +15,17 @@ body{font-family:'Georgia',serif;background:linear-gradient(135deg,#ff6b9d,#ff8c
 .flower,.heart{position:absolute;font-size:25px;opacity:0.4;animation:floatDown 10s linear infinite;}
 .flower{animation:floatDown 8s linear infinite,rotate 4s linear infinite;}
 .heart{animation:floatDown 6s linear infinite,pulsate 2s ease-in-out infinite;}
-@keyframes rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
-@keyframes pulsate{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
-@keyframes floatDown{0%{transform:translateY(-10vh);}100%{transform:translateY(110vh);}}
+@keyframes rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
+@keyframes pulsate{0%,100%{transform:scale(1);}50%{transform:scale(1.1);} }
+@keyframes floatDown{0%{transform:translateY(-10vh);}100%{transform:translateY(110vh);} }
 
 /* containers */
 .container{position:absolute;text-align:center;background:rgba(255,255,255,0.95);padding:10px;border-radius:20px;box-shadow:0 20px 60px rgba(255,107,157,0.3);width:90%;max-width:400px;z-index:10;transition:opacity 0.6s ease;}
 .hidden{opacity:0;pointer-events:none;}
 .fade-in{animation:fadeIn 0.8s forwards;}
 .fade-out{animation:fadeOut 0.8s forwards;}
-@keyframes fadeIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
-@keyframes fadeOut{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.95);}}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);} }
+@keyframes fadeOut{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.95);} }
 
 /* buttons */
 .btn{padding:10px 16px;border:none;border-radius:50px;font-weight:bold;font-size:14px;cursor:pointer;transition:all 0.5s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;line-height:1.2;min-height:44px;}
@@ -113,8 +113,7 @@ body{font-family:'Georgia',serif;background:linear-gradient(135deg,#ff6b9d,#ff8c
 #curtain-right{right:0;}
 .curtain-open{width:0;}
 .curtain::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(255,255,255,0.1) 2px,rgba(255,255,255,0.1) 4px);pointer-events:none;}
-@keyframes sway{0%{transform:rotateY(0deg);}50%{transform:rotateY(1deg);}100%{transform:rotateY(0deg);}}
-.curtain{animation:sway 2s ease-in-out infinite alternate;}
+@keyframes sway{0%{transform:rotateY(0deg);}50%{transform:rotateY(1deg);}100%{transform:rotateY(0deg);} }
 </style>
 </head>
 <body>
@@ -166,12 +165,11 @@ let takeover = false;
 let isValentine = false;
 
 function startExperience(){
-    openCurtains(); // curtains open on start
+    openCurtains();
     const audio = document.getElementById("itsjustus");
-    audio.currentTime = 59; // 0:59
+    audio.currentTime = 59; 
     audio.play();
     
-    // Fade out intro
     document.getElementById("introScreen").classList.add('fade-out');
     
     setTimeout(()=>{
@@ -196,7 +194,6 @@ function render(){
             <button class="btn btn-yes" style="transform:scale(${yesScale});flex:1 1 auto;min-width:120px;max-width:280px;" onclick="handleYes()">
                 Obviously you're the most charming, gentle, kind, amazing, tall, big biceped, understanding person ever 💝
             </button>
-
             <button class="btn btn-no" style="transform:scale(${noScale});flex:0 0 auto;min-width:80px;" onclick="handleNo()">
                 ${NO_PHRASES[Math.min(noClicks,NO_PHRASES.length-1)]}
             </button>
@@ -219,7 +216,6 @@ function handleNo(){ if(noClicks < NO_PHRASES.length-1) noClicks++; else takeove
 function handleYes(){ isValentine = true; render(); }
 
 function goToNeverland(){
-    // Fade out main screen
     document.getElementById("mainScreen").classList.add('fade-out');
     
     setTimeout(()=>{
@@ -230,18 +226,16 @@ function goToNeverland(){
         itsjustus.currentTime = 0;
 
         const neverland = document.getElementById("neverland");
-        neverland.currentTime = 128; // 2:08
+        neverland.currentTime = 128; 
         neverland.play();
 
         setTimeout(()=>{
             neverland.pause();
             closeCurtains();
-        }, 6500); // 6.5s = 2:08 to 2:14.5
+        }, 6500);
         
         document.getElementById("neverlandScreen").classList.remove("hidden");
         document.getElementById("neverlandScreen").classList.add('fade-in');
-        
-        // Create falling hearts effect
         createFallingHearts();
     },800);
 }
@@ -250,54 +244,44 @@ function createCelebrationImages() {
     const container = document.getElementById("celebrationImages");
     container.innerHTML = "";
 
-    // Calculate responsive positions based on screen size
     const w = window.innerWidth;
     const h = window.innerHeight;
-    
-    // Adjust positions for mobile
     const isMobile = w <= 600;
-    
-    // Top row - 3 images next to each other (closer to panel, moved further left, closer together)
+
+    // Top row
     const topRow = [
-        {src:"./soobin1.jpeg", top:h*0.12, left:isMobile ? w*0.05 : w*0.05},
-        {src:"./kai.jpg", top:h*0.12, left:isMobile ? w*0.45 : w*0.45},
-        {src:"./beomgyu.jpg", top:h*0.12, left:isMobile ? w*0.85 : w*0.85}
+        {src:"./soobin1.jpeg", top:isMobile? h*0.15 : h*0.12, left:isMobile? w*0.15 : w*0.05},
+        {src:"./kai.jpg", top:isMobile? h*0.15 : h*0.12, left:isMobile? w*0.4 : w*0.45},
+        {src:"./beomgyu.jpg", top:isMobile? h*0.15 : h*0.12, left:isMobile? w*0.65 : w*0.85}
     ];
-    
-    // Bottom row - 3 images next to each other (lower position, moved further left, closer together)
+
+    // Bottom row
     const bottomRow = [
-        {src:"./taehyun.jpg", top:h*0.82, left:isMobile ? w*0.05 : w*0.05},
-        {src:"./yeonjun2.jpg", top:h*0.82, left:isMobile ? w*0.45 : w*0.45},
-        {src:"./yeonjun3.jpg", top:h*0.82, left:isMobile ? w*0.85 : w*0.85}
+        {src:"./taehyun.jpg", top:isMobile? h*0.75 : h*0.82, left:isMobile? w*0.15 : w*0.05},
+        {src:"./yeonjun2.jpg", top:isMobile? h*0.75 : h*0.82, left:isMobile? w*0.4 : w*0.45},
+        {src:"./yeonjun3.jpg", top:isMobile? h*0.75 : h*0.82, left:isMobile? w*0.65 : w*0.85}
     ];
-    
-    [...topRow, ...bottomRow].forEach((img, i) => {
+
+    [...topRow, ...bottomRow].forEach((img, i)=>{
         const el = document.createElement("div");
         el.className = "celebration-img";
         el.style.backgroundImage = `url(${img.src})`;
-        
-        // Start off-screen and invisible
-        el.style.top = "100%";  // start below screen
+        el.style.top = "100%";
         el.style.left = img.left + "px";
-        el.style.opacity = 0;   // invisible initially
+        el.style.opacity = 0;
         el.style.transform = "scale(0.8)";
-        
         container.appendChild(el);
-        
-        // Staggered animation into position
-        setTimeout(() => {
+
+        setTimeout(()=>{
             el.style.transition = "top 1s ease-out, left 1s ease-out, opacity 1s ease-out, transform 0.8s ease-out";
             el.style.top = img.top + "px";
             el.style.opacity = 1;
             el.style.transform = "scale(1.05)";
-            
-            // Optional bounce back to normal scale
-            setTimeout(() => {
+            setTimeout(()=>{
                 el.style.transform = "scale(1)";
-                // Add continuous floating animation
                 el.style.animation = "floatSoft 4s ease-in-out infinite";
-            }, 800);
-        }, i * 200);  // stagger each image by 200ms
+            },800);
+        }, i*200);
     });
 }
 
@@ -315,41 +299,32 @@ function createFloating(){
 }
 createFloating();
 
-// Falling hearts for Neverland page
 function createFallingHearts(){
     const container = document.getElementById("hearts");
-    for(let i = 0; i < 20; i++){
+    for(let i=0;i<20;i++){
         setTimeout(()=>{
             const heart = document.createElement("div");
-            heart.className = "heart";
-            heart.innerText = "💖";
-            heart.style.left = Math.random() * 100 + "%";
-            heart.style.animationDelay = Math.random() * 2 + "s";
-            heart.style.fontSize = (20 + Math.random() * 15) + "px";
-            heart.style.opacity = "0.8";
+            heart.className="heart";
+            heart.innerText="💖";
+            heart.style.left=Math.random()*100+"%";
+            heart.style.animationDelay=Math.random()*2+"s";
+            heart.style.fontSize=(20+Math.random()*15)+"px";
+            heart.style.opacity="0.8";
             container.appendChild(heart);
-            
-            // Remove heart after animation
-            setTimeout(() => heart.remove(), 8000);
-        }, i * 200);
+            setTimeout(()=>heart.remove(),8000);
+        }, i*200);
     }
 }
 
-// Letter by letter text animation
 function animateTextLetterByLetter(){
     const textElement = document.querySelector("#neverlandScreen .love-quote");
     const text = textElement.innerText;
     textElement.innerText = "";
-    
-    text.split('').forEach((letter, index) => {
-        setTimeout(() => {
-            textElement.innerText += letter;
-            textElement.style.opacity = "1";
-        }, index * 100);
+    text.split('').forEach((letter,index)=>{
+        setTimeout(()=>{textElement.innerText+=letter;textElement.style.opacity="1";}, index*100);
     });
 }
 
-// Curtains functions
 function openCurtains(){
     document.getElementById('curtain-left').classList.add('curtain-open');
     document.getElementById('curtain-right').classList.add('curtain-open');
@@ -359,12 +334,8 @@ function closeCurtains(){
     document.getElementById('curtain-right').classList.remove('curtain-open');
 }
 
-// Open curtains on page load
-window.addEventListener('load', ()=>{
-    setTimeout(()=>{ openCurtains(); }, 500);
-});
+window.addEventListener('load', ()=>{ setTimeout(()=>{ openCurtains(); },500); });
 
-// stop music when leaving site
 document.addEventListener('visibilitychange', ()=>{
     const audio = document.getElementById('itsjustus');
     if(document.hidden) audio.pause();
