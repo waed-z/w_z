@@ -257,18 +257,18 @@ function createCelebrationImages() {
     // Adjust positions for mobile
     const isMobile = w <= 600;
     
-    // Top row - 3 images next to each other (higher position, closer together, away from panel)
+    // Top row - 3 images next to each other (higher position, more spacing, moved left)
     const topRow = [
-        {src:"./soobin1.jpeg", top:h*0.03, left:isMobile ? w*0.30 : w*0.38},
+        {src:"./soobin1.jpeg", top:h*0.03, left:isMobile ? w*0.25 : w*0.33},
         {src:"./kai.jpg", top:h*0.03, left:isMobile ? w*0.45 : w*0.45},
-        {src:"./beomgyu.jpg", top:h*0.03, left:isMobile ? w*0.60 : w*0.52}
+        {src:"./beomgyu.jpg", top:h*0.03, left:isMobile ? w*0.65 : w*0.57}
     ];
     
-    // Bottom row - 3 images next to each other (lower position, closer together, away from panel)
+    // Bottom row - 3 images next to each other (lower position, more spacing, moved left)
     const bottomRow = [
-        {src:"./taehyun.jpg", top:h*0.82, left:isMobile ? w*0.30 : w*0.38},
+        {src:"./taehyun.jpg", top:h*0.82, left:isMobile ? w*0.25 : w*0.33},
         {src:"./yeonjun2.jpg", top:h*0.82, left:isMobile ? w*0.45 : w*0.45},
-        {src:"./yeonjun3.jpg", top:h*0.82, left:isMobile ? w*0.60 : w*0.52}
+        {src:"./yeonjun3.jpg", top:h*0.82, left:isMobile ? w*0.65 : w*0.57}
     ];
     
     [...topRow, ...bottomRow].forEach((img, i) => {
