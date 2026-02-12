@@ -20,7 +20,7 @@ body{font-family:'Georgia',serif;background:linear-gradient(135deg,#ff6b9d,#ff8c
 @keyframes floatDown{0%{transform:translateY(-10vh);}100%{transform:translateY(110vh);}}
 
 /* containers */
-.container{position:absolute;text-align:center;background:rgba(255,255,255,0.95);padding:40px;border-radius:20px;box-shadow:0 20px 60px rgba(255,107,157,0.3);max-width:500px;z-index:10;transition:opacity 0.6s ease;}
+.container{position:absolute;text-align:center;background:rgba(255,255,255,0.95);padding:20px;border-radius:20px;box-shadow:0 20px 60px rgba(255,107,157,0.3);width:90%;max-width:500px;z-index:10;transition:opacity 0.6s ease;}
 .hidden{opacity:0;pointer-events:none;}
 .fade-in{animation:fadeIn 0.8s forwards;}
 .fade-out{animation:fadeOut 0.8s forwards;}
@@ -28,7 +28,7 @@ body{font-family:'Georgia',serif;background:linear-gradient(135deg,#ff6b9d,#ff8c
 @keyframes fadeOut{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.95);}}
 
 /* buttons */
-.btn{padding:15px 30px;border:none;border-radius:50px;font-weight:bold;cursor:pointer;transition:all 0.5s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
+.btn{padding:12px 20px;border:none;border-radius:50px;font-weight:bold;font-size:16px;cursor:pointer;transition:all 0.5s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
 .btn-yes{background:linear-gradient(135deg,#ff6b9d,#ff8cc8);color:white;transition:all 0.3s cubic-bezier(.34,1.56,.64,1);}
 .btn-yes:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 15px 40px rgba(255,107,157,0.5);}
 .btn-yes:active{transform:translateY(-1px) scale(0.98);}
@@ -38,7 +38,25 @@ body{font-family:'Georgia',serif;background:linear-gradient(135deg,#ff6b9d,#ff8c
 .intro-btn{background:#d63384;color:white;margin-top:20px;}
 
 /* images */
-.gif-container img{width:100%;max-width:300px;border-radius:15px;margin-bottom:20px;}
+.gif-container img{width:100%;max-width:250px;border-radius:15px;margin-bottom:20px;}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 600px) {
+    .celebration-img {
+        width: 100px;
+        height: 100px;
+    }
+    .flower, .heart {
+        font-size: 20px;
+    }
+    .btn {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+}
 
 /* success text */
 .main-celebration{font-size:1.8em;color:#ff6b9d;font-weight:bold;}
@@ -195,15 +213,19 @@ function createCelebrationImages() {
     const container = document.getElementById("celebrationImages");
     container.innerHTML = "";
 
+    // Calculate responsive positions based on screen size
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    
     const leftStack = [
-        {src:"./soobin1.jpeg", top:"5%", left:"20%"},
-        {src:"./kai.jpg", top:"40%", left:"10%"},
-        {src:"./yeonjun2.jpg", top:"75%", left:"1%"}
+        {src:"./soobin1.jpeg", top:h*0.05, left:w*0.2},
+        {src:"./kai.jpg", top:h*0.4, left:w*0.1},
+        {src:"./yeonjun2.jpg", top:h*0.75, left:w*0.01}
     ];
     const rightStack = [
-        {src:"./beomgyu.jpg", top:"5%", left:"70%"},
-        {src:"./taehyun.jpg", top:"40%", left:"80%"},
-        {src:"./yeonjun3.jpg", top:"75%", left:"90%"}
+        {src:"./beomgyu.jpg", top:h*0.05, left:w*0.7},
+        {src:"./taehyun.jpg", top:h*0.4, left:w*0.8},
+        {src:"./yeonjun3.jpg", top:h*0.75, left:w*0.9}
     ];
     
     [...leftStack,...rightStack].forEach((img, i) => {
@@ -213,7 +235,7 @@ function createCelebrationImages() {
         
         // Start off-screen and invisible
         el.style.top = "100%";  // start below screen
-        el.style.left = img.left;
+        el.style.left = img.left + "px";
         el.style.opacity = 0;   // invisible initially
         el.style.transform = "scale(0.8)";
         
@@ -222,7 +244,7 @@ function createCelebrationImages() {
         // Staggered animation into position
         setTimeout(() => {
             el.style.transition = "top 1s ease-out, left 1s ease-out, opacity 1s ease-out, transform 0.8s ease-out";
-            el.style.top = img.top;
+            el.style.top = img.top + "px";
             el.style.opacity = 1;
             el.style.transform = "scale(1.05)";
             
