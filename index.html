@@ -250,18 +250,18 @@ function createCelebrationImages() {
 
     // Top row
     const topRow = [
-        {src:"./soobin1.jpeg", top:isMobile? "15%" : "12%", left:isMobile? "0%" : "0%"},
-        {src:"./kai.jpg", top:isMobile? "15%" : "12%", left:isMobile? "40%" : "42%"},
-        {src:"./beomgyu.jpg", top:isMobile? "15%" : "12%", left:isMobile? "68%" : "78%"}
+    {src:"./soobin1.jpeg", top:isMobile? "15%" : "12%", left:isMobile? "0%" : "0%"},
+    {src:"./kai.jpg", top:isMobile? "15%" : "12%", left:isMobile? "35%" : "42%"},       // moved left from 40% → 35%
+    {src:"./beomgyu.jpg", top:isMobile? "15%" : "12%", left:isMobile? "70%" : "80%"}    // moved left from 75% → 70%
+];
 
-    ];
+// Bottom row
+const bottomRow = [
+    {src:"./taehyun.jpg", top:isMobile? "85%" : "82%", left:isMobile? "0%" : "0%"},
+    {src:"./yeonjun2.jpg", top:isMobile? "85%" : "82%", left:isMobile? "35%" : "42%"},  // moved left
+    {src:"./yeonjun3.jpg", top:isMobile? "85%" : "82%", left:isMobile? "70%" : "80%"}   // moved left
+];
 
-    // Bottom row - same distance from panel as top row
-    const bottomRow = [
-        {src:"./taehyun.jpg", top:isMobile? "15%" : "12%", left:isMobile? "0%" : "0%"},
-        {src:"./yeonjun2.jpg", top:isMobile? "15%" : "12%", left:isMobile? "40%" : "42%"},
-        {src:"./yeonjun3.jpg", top:isMobile? "15%" : "12%", left:isMobile? "68%" : "78%"}
-    ];
 
     [...topRow, ...bottomRow].forEach((img, i)=>{
         const el = document.createElement("div");
