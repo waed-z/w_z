@@ -13,16 +13,28 @@ body{font-family:'Georgia',serif;background:linear-gradient(135deg,#ff6b9d,#ff8c
     position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;
 }
 .flower,.heart{position:absolute;font-size:25px;opacity:0.4;animation:floatDown 10s linear infinite;}
+.flower{animation:floatDown 8s linear infinite,rotate 4s linear infinite;}
+.heart{animation:floatDown 6s linear infinite,pulsate 2s ease-in-out infinite;}
+@keyframes rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes pulsate{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
 @keyframes floatDown{0%{transform:translateY(-10vh);}100%{transform:translateY(110vh);}}
 
 /* containers */
 .container{position:absolute;text-align:center;background:rgba(255,255,255,0.95);padding:40px;border-radius:20px;box-shadow:0 20px 60px rgba(255,107,157,0.3);max-width:500px;z-index:10;transition:opacity 0.6s ease;}
 .hidden{opacity:0;pointer-events:none;}
+.fade-in{animation:fadeIn 0.8s forwards;}
+.fade-out{animation:fadeOut 0.8s forwards;}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+@keyframes fadeOut{from{opacity:1;transform:scale(1);}to{opacity:0;transform:scale(0.95);}}
 
 /* buttons */
-.btn{padding:15px 30px;border:none;border-radius:50px;font-weight:bold;cursor:pointer;transition:all 0.5s cubic-bezier(.34,1.56,.64,1);}
-.btn-yes{background:linear-gradient(135deg,#ff6b9d,#ff8cc8);color:white;}
-.btn-no{background:linear-gradient(135deg,#ff4757,#ff6b81);color:white;}
+.btn{padding:15px 30px;border:none;border-radius:50px;font-weight:bold;cursor:pointer;transition:all 0.5s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
+.btn-yes{background:linear-gradient(135deg,#ff6b9d,#ff8cc8);color:white;transition:all 0.3s cubic-bezier(.34,1.56,.64,1);}
+.btn-yes:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 15px 40px rgba(255,107,157,0.5);}
+.btn-yes:active{transform:translateY(-1px) scale(0.98);}
+.btn-no{background:linear-gradient(135deg,#ff4757,#ff6b81);color:white;transition:all 0.3s cubic-bezier(.34,1.56,.64,1);}
+.btn-no:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 15px 40px rgba(255,71,87,0.5);}
+.btn-no:active{transform:translateY(-1px) scale(0.98);}
 .intro-btn{background:#d63384;color:white;margin-top:20px;}
 
 /* images */
@@ -35,14 +47,19 @@ body{font-family:'Georgia',serif;background:linear-gradient(135deg,#ff6b9d,#ff8c
 
 /* celebration side pics */
 .celebration-images{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5;}
-.celebration-img{position:absolute;width:140px;height:140px;background-size:cover;background-position:center;border-radius:15px;box-shadow:0 10px 30px rgba(255,107,157,0.4);animation:floatSoft 4s ease-in-out infinite alternate;}
-@keyframes floatSoft{from{transform:translateY(0px);}to{transform:translateY(-15px);}}
+.celebration-img{position:absolute;width:140px;height:140px;background-size:cover;background-position:center;border-radius:15px;box-shadow:0 10px 30px rgba(255,107,157,0.4);animation:floatSoft 4s ease-in-out infinite alternate;transition:all 0.3s ease;}
+.celebration-img:hover{transform:scale(1.05) translateY(-20px);box-shadow:0 15px 40px rgba(255,107,157,0.6);}
+.btn::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,0.3);transform:translate(-50%,-50%);transition:width 0.6s,height 0.6s;}
+.btn:hover::before{width:300px;height:300px;}
 
 /* Curtains */
-.curtain{position:fixed;top:0;width:50%;height:100%;background:#ff8cc8;z-index:999;transition:all 1s ease-in-out;}
+.curtain{position:fixed;top:0;width:50%;height:100%;background:linear-gradient(#b30059,#ff6b9d);z-index:999;transition:all 1s cubic-bezier(0.4,0,0.2,1);transform-origin:top center;box-shadow:inset 0 0 50px rgba(0,0,0,0.3);}
 #curtain-left{left:0;}
 #curtain-right{right:0;}
 .curtain-open{width:0;}
+.curtain::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(255,255,255,0.1) 2px,rgba(255,255,255,0.1) 4px);pointer-events:none;}
+@keyframes sway{0%{transform:rotateY(0deg);}50%{transform:rotateY(1deg);}100%{transform:rotateY(0deg);}}
+.curtain{animation:sway 2s ease-in-out infinite alternate;}
 </style>
 </head>
 <body>
@@ -98,8 +115,16 @@ function startExperience(){
     const audio = document.getElementById("itsjustus");
     audio.currentTime = 59; // 0:59
     audio.play();
-    document.getElementById("introScreen").classList.add("hidden");
-    setTimeout(()=>{document.getElementById("mainScreen").classList.remove("hidden"); render();},600);
+    
+    // Fade out intro
+    document.getElementById("introScreen").classList.add('fade-out');
+    
+    setTimeout(()=>{
+        document.getElementById("introScreen").classList.add("hidden");
+        document.getElementById("mainScreen").classList.remove("hidden");
+        document.getElementById("mainScreen").classList.add('fade-in');
+        render();
+    },800);
 }
 
 function render(){
@@ -116,6 +141,7 @@ function render(){
             <button class="btn btn-yes" style="transform:scale(${yesScale});" onclick="handleYes()">
                 Obviously you're the most charming, gentle, kind, amazing, tall, big biceped, understanding person ever 💝
             </button>
+
             <button class="btn btn-no" style="transform:scale(${noScale});" onclick="handleNo()">
                 ${NO_PHRASES[Math.min(noClicks,NO_PHRASES.length-1)]}
             </button>
@@ -138,21 +164,31 @@ function handleNo(){ if(noClicks < NO_PHRASES.length-1) noClicks++; else takeove
 function handleYes(){ isValentine = true; render(); }
 
 function goToNeverland(){
-    document.getElementById("mainScreen").classList.add("hidden");
-    document.getElementById("celebrationImages").innerHTML = "";
-    const itsjustus = document.getElementById("itsjustus");
-    itsjustus.pause();
-    itsjustus.currentTime = 0;
-
-    const neverland = document.getElementById("neverland");
-    neverland.currentTime = 128; // 2:08
-    neverland.play();
-
+    // Fade out main screen
+    document.getElementById("mainScreen").classList.add('fade-out');
+    
     setTimeout(()=>{
-        neverland.pause();
-        closeCurtains();
-    }, 6500); // 6.5s = 2:08 to 2:14.5
-    document.getElementById("neverlandScreen").classList.remove("hidden");
+        document.getElementById("mainScreen").classList.add("hidden");
+        document.getElementById("celebrationImages").innerHTML = "";
+        const itsjustus = document.getElementById("itsjustus");
+        itsjustus.pause();
+        itsjustus.currentTime = 0;
+
+        const neverland = document.getElementById("neverland");
+        neverland.currentTime = 128; // 2:08
+        neverland.play();
+
+        setTimeout(()=>{
+            neverland.pause();
+            closeCurtains();
+        }, 6500); // 6.5s = 2:08 to 2:14.5
+        
+        document.getElementById("neverlandScreen").classList.remove("hidden");
+        document.getElementById("neverlandScreen").classList.add('fade-in');
+        
+        // Create falling hearts effect
+        createFallingHearts();
+    },800);
 }
 
 function createCelebrationImages() {
@@ -169,12 +205,34 @@ function createCelebrationImages() {
         {src:"./taehyun.jpg", top:"40%", left:"80%"},
         {src:"./yeonjun3.jpg", top:"75%", left:"90%"}
     ];
-    [...leftStack,...rightStack].forEach(img=>{
+    
+    [...leftStack,...rightStack].forEach((img, i) => {
         const el = document.createElement("div");
-        el.className="celebration-img";
-        el.style.backgroundImage=`url(${img.src})`;
-        el.style.top=img.top; el.style.left=img.left;
+        el.className = "celebration-img";
+        el.style.backgroundImage = `url(${img.src})`;
+        
+        // Start off-screen and invisible
+        el.style.top = "100%";  // start below screen
+        el.style.left = img.left;
+        el.style.opacity = 0;   // invisible initially
+        el.style.transform = "scale(0.8)";
+        
         container.appendChild(el);
+        
+        // Staggered animation into position
+        setTimeout(() => {
+            el.style.transition = "top 1s ease-out, left 1s ease-out, opacity 1s ease-out, transform 0.8s ease-out";
+            el.style.top = img.top;
+            el.style.opacity = 1;
+            el.style.transform = "scale(1.05)";
+            
+            // Optional bounce back to normal scale
+            setTimeout(() => {
+                el.style.transform = "scale(1)";
+                // Add continuous floating animation
+                el.style.animation = "floatSoft 4s ease-in-out infinite";
+            }, 800);
+        }, i * 200);  // stagger each image by 200ms
     });
 }
 
@@ -191,6 +249,40 @@ function createFloating(){
     }
 }
 createFloating();
+
+// Falling hearts for Neverland page
+function createFallingHearts(){
+    const container = document.getElementById("hearts");
+    for(let i = 0; i < 20; i++){
+        setTimeout(()=>{
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerText = "💖";
+            heart.style.left = Math.random() * 100 + "%";
+            heart.style.animationDelay = Math.random() * 2 + "s";
+            heart.style.fontSize = (20 + Math.random() * 15) + "px";
+            heart.style.opacity = "0.8";
+            container.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => heart.remove(), 8000);
+        }, i * 200);
+    }
+}
+
+// Letter by letter text animation
+function animateTextLetterByLetter(){
+    const textElement = document.querySelector("#neverlandScreen .love-quote");
+    const text = textElement.innerText;
+    textElement.innerText = "";
+    
+    text.split('').forEach((letter, index) => {
+        setTimeout(() => {
+            textElement.innerText += letter;
+            textElement.style.opacity = "1";
+        }, index * 100);
+    });
+}
 
 // Curtains functions
 function openCurtains(){
@@ -215,4 +307,3 @@ document.addEventListener('visibilitychange', ()=>{
 </script>
 </body>
 </html>
-
